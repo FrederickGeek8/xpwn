@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "common.h"
+#include "xpwn_common.h"
 #include "abstractfile.h"
 #include <xpwn/img2.h>
 

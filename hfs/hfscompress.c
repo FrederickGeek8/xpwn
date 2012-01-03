@@ -1,5 +1,6 @@
 #include <zlib.h>
-#include "common.h"
+
+#include "xpwn_common.h"
 #include <hfs/hfsplus.h>
 #include <hfs/hfscompress.h>
 

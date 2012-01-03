@@ -6,11 +6,46 @@
 #include <stdint.h>
 #include <string.h>
 #include <sys/types.h>
+#include <dirent.h>
+
+#if _MSC_VER	//////////////////////////// MSVS //////////////////////////////
+#include <direct.h>
+
+#define __attribute__(x) 
+
+#define inline __inline
+
+#define getcwd _getcwd
+
+#define PRId64 "I64d"
+#define PRIx64 "I64x"
+
+#define fseeko _fseeki64
+#define ftello _ftelli64
+
+#define snprintf _snprintf
+
+#define exit(x) throw
+
+#pragma pack (push)
+#pragma pack(1)
+
+
+#endif// ----------------------------------END MSVS
+#if ! _MSC_VER	//////////////////////////// GCC //////////////////////////////
+
+#include <unistd.h>
+#include <inttypes.h>
+//#define fseeko fseeko64
+//#define ftello ftello64
+//#define off_t off64_t
+typedef unsigned char BOOL;
+
+
+#endif //---------------------------------- END GCC -------------------------
 
 #ifdef WIN32
-#define fseeko fseeko64
-#define ftello ftello64
-#define off_t off64_t
+
 #define mkdir(x, y) mkdir(x)
 #define PATH_SEPARATOR "\\"
 #else
@@ -32,13 +67,13 @@
 
 #define ASSERT(x, m) if(!(x)) { fflush(stdout); fprintf(stderr, "error: %s\n", m); perror("error"); fflush(stderr); exit(1); }
 
-extern char endianness;
+extern char xpwn_endianness;
 
 static inline void flipEndian(unsigned char* x, int length) {
   int i;
   unsigned char tmp;
 
-  if(endianness == IS_BIG_ENDIAN) {
+  if(xpwn_endianness == IS_BIG_ENDIAN) {
     return;
   } else {
     for(i = 0; i < (length / 2); i++) {
@@ -53,7 +88,7 @@ static inline void flipEndianLE(unsigned char* x, int length) {
   int i;
   unsigned char tmp;
 
-  if(endianness == IS_LITTLE_ENDIAN) {
+  if(xpwn_endianness == IS_LITTLE_ENDIAN) {
     return;
   } else {
     for(i = 0; i < (length / 2); i++) {

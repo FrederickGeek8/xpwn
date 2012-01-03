@@ -144,7 +144,7 @@ static BTKey* attrDataRead(off_t offset, io_func* io) {
 
 			flipAttrData((HFSPlusAttrData*) record);
 
-			record = realloc(record, sizeof(HFSPlusAttrData) + ((HFSPlusAttrData*) record)->size);
+			record = (HFSPlusAttrRecord*)realloc(record, sizeof(HFSPlusAttrData) + ((HFSPlusAttrData*) record)->size);
 			if(!READ(io, offset + sizeof(HFSPlusAttrData), ((HFSPlusAttrData*) record)->size, ((HFSPlusAttrData*) record)->data))
 				return NULL;
 

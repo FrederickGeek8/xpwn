@@ -1,3 +1,6 @@
+#ifndef _IMG2_H
+#define _IMG2_H
+
 #include <stdint.h>
 #include <abstractfile.h>
 
@@ -32,3 +35,5 @@ typedef struct InfoImg2 {
 
 AbstractFile* createAbstractFileFromImg2(AbstractFile* file);
 AbstractFile* duplicateImg2File(AbstractFile* file, AbstractFile* backing);
+
+#endif // _IMG2_H

@@ -6,7 +6,7 @@
 #include <stdlib.h>
 
 
-#include "common.h"
+#include "xpwn_common.h"
 
 #define READ(a, b, c, d) ((*((a)->read))(a, b, c, d))
 #define WRITE(a, b, c, d) ((*((a)->write))(a, b, c, d))

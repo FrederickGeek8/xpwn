@@ -2,7 +2,7 @@
 #define HFSCOMPRESS_H
 
 #include <stdint.h>
-#include "common.h"
+#include "xpwn_common.h"
 
 #define CMPFS_MAGIC 0x636D7066
 

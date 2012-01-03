@@ -1,0 +1,15 @@
+# VS stuff
+
+Debug
+Release
+*.sdf
+*.suo
+*.vcxproj.user
+ipch
+x64
+
+# OS X stuff
+.DS_Store
+dmglib.a
+*.o
+

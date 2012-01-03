@@ -1,6 +1,6 @@
 #include <stdlib.h>
 #include <string.h>
-#include "common.h"
+#include "xpwn_common.h"
 #include <xpwn/img3.h>
 #include <xpwn/libxpwn.h>
 
@@ -239,21 +239,21 @@ void closeImg3(AbstractFile* file) {
 			}
 			uint8_t ivec[16];
 			memcpy(ivec, info->iv, 16);
-			AES_cbc_encrypt(info->data->data, info->data->data, (sz / 16) * 16, &(info->encryptKey), ivec, AES_ENCRYPT);
+			AES_cbc_encrypt((const unsigned char*)info->data->data, (unsigned char*)info->data->data, (sz / 16) * 16, &(info->encryptKey), ivec, AES_ENCRYPT);
 		}
 
 		if(info->exploit24k) {
 			info->replaceDWord = *((uint32_t*) info->data->data);
 			FLIPENDIANLE(info->replaceDWord);
 			*((uint32_t*) info->data->data) = 0x22023001;
-			flipEndianLE(info->data->data, 4);
+			flipEndianLE((unsigned char*)info->data->data, 4);
 		}
 
 		if(info->exploitN8824k) {
 			info->replaceDWord = *((uint32_t*) info->data->data);
 			FLIPENDIANLE(info->replaceDWord);
 			*((uint32_t*) info->data->data) = 0x84023001;
-			flipEndianLE(info->data->data, 4);
+			flipEndianLE((unsigned char*)info->data->data, 4);
 		}
 
 		info->file->seek(info->file, 0);
@@ -297,7 +297,7 @@ void setKeyImg3(AbstractFile2* file, const unsigned int* key, const unsigned int
 		}
 		uint8_t ivec[16];
 		memcpy(ivec, info->iv, 16);
-		AES_cbc_encrypt(info->data->data, info->data->data, (sz / 16) * 16, &(info->decryptKey), ivec, AES_DECRYPT);
+		AES_cbc_encrypt((const unsigned char*)info->data->data, (unsigned char*)info->data->data, (sz / 16) * 16, &(info->decryptKey), ivec, AES_DECRYPT);
 	}
 
 	info->encrypted = TRUE;
@@ -409,7 +409,7 @@ void writeImg3Default(AbstractFile* file, Img3Element* element, Img3Info* info) 
 		/* add "plain" zeros */
 		file->write(file, element->data, element->header->dataSize);
 		if (sz > 0) {
-			char *zeros = calloc(1, sz);
+			char *zeros = (char*)calloc(1, sz);
 			file->write(file, zeros, sz);
 			free(zeros);
 		}

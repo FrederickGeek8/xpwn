@@ -13,7 +13,7 @@
 #include "hfs/hfslib.h"
 #include <inttypes.h>
 
-char endianness;
+static char endianness;
 
 void cmd_ls(Volume* volume, int argc, const char *argv[]) {	
 	if(argc > 1)

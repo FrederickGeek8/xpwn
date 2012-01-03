@@ -2,7 +2,7 @@
 #define IMG3_H
 
 #include <stdint.h>
-#include "common.h"
+#include "xpwn_common.h"
 #include <abstractfile.h>
 #include <openssl/aes.h>
 

@@ -11,11 +11,11 @@ int main(int argc, char* argv[]) {
 	init_libxpwn(&argc, argv);
 
 	if(argc < 3) {
-		printf("usage: %s <infile> <outfile> [-x24k|-xn8824k] [-t <template> [-c <certificate>]] [-k <key>] [-iv <key>] [-decrypt]\n", argv[0]);
+		printf("usage: %s <infile> <outfile> [-x24k|-xn8824k] [-t <templateFile> [-c <certificate>]] [-k <key>] [-iv <key>] [-decrypt]\n", argv[0]);
 		return 0;
 	}
 
-	AbstractFile* template = NULL;
+	AbstractFile* templateFile = NULL;
 	AbstractFile* certificate = NULL;
 	unsigned int* key = NULL;
 	unsigned int* iv = NULL;
@@ -28,18 +28,18 @@ int main(int argc, char* argv[]) {
 	int argNo = 3;
 	while(argNo < argc) {
 		if(strcmp(argv[argNo], "-t") == 0 && (argNo + 1) < argc) {
-			template = createAbstractFileFromFile(fopen(argv[argNo + 1], "rb"));
-			if(!template) {
-				fprintf(stderr, "error: cannot open template\n");
+			templateFile = createAbstractFileFromFile(fopen(argv[argNo + 1], "rb"));
+			if(!templateFile) {
+				fprintf(stderr, "error: cannot open templateFile\n");
 				return 1;
 			}
 		}
 
 		if(strcmp(argv[argNo], "-decrypt") == 0) {
 			doDecrypt = TRUE;
-			template = createAbstractFileFromFile(fopen(argv[1], "rb"));
-			if(!template) {
-				fprintf(stderr, "error: cannot open template\n");
+			templateFile = createAbstractFileFromFile(fopen(argv[1], "rb"));
+			if(!templateFile) {
+				fprintf(stderr, "error: cannot open templateFile\n");
 				return 1;
 			}
 		}
@@ -47,7 +47,7 @@ int main(int argc, char* argv[]) {
 		if(strcmp(argv[argNo], "-c") == 0 && (argNo + 1) < argc) {
 			certificate = createAbstractFileFromFile(fopen(argv[argNo + 1], "rb"));
 			if(!certificate) {
-				fprintf(stderr, "error: cannot open template\n");
+				fprintf(stderr, "error: cannot open templateFile\n");
 				return 1;
 			}
 		}
@@ -103,14 +103,14 @@ int main(int argc, char* argv[]) {
 
 	AbstractFile* newFile;
 
-	if(template) {
+	if(templateFile) {
 		if(hasKey && !doDecrypt) {
-			newFile = duplicateAbstractFile2(template, outFile, key, iv, certificate);
+			newFile = duplicateAbstractFile2(templateFile, outFile, key, iv, certificate);
 		} else {
-			newFile = duplicateAbstractFile2(template, outFile, NULL, NULL, certificate);
+			newFile = duplicateAbstractFile2(templateFile, outFile, NULL, NULL, certificate);
 		}
 		if(!newFile) {
-			fprintf(stderr, "error: cannot duplicate file from provided template\n");
+			fprintf(stderr, "error: cannot duplicate file from provided templateFile\n");
 			return 4;
 		}
 	} else {

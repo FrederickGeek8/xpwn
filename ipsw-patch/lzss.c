@@ -263,7 +263,7 @@ compress_lzss(uint8_t *dst, uint32_t dstlen, uint8_t *src, uint32_t srcLen)
         sp->text_buf[r + len] = *src++;  
     if (!len) {
         free(sp);
-        return (void *) 0;  /* text of size zero */
+        return (uint8_t*)0;  /* text of size zero */
     }
     /*
      * Insert the F strings, each of which begins with one or more
@@ -300,7 +300,7 @@ compress_lzss(uint8_t *dst, uint32_t dstlen, uint8_t *src, uint32_t srcLen)
                     *dst++ = code_buf[i]; 
                 else {
                     free(sp);
-                    return (void *) 0;
+                    return (uint8_t*) 0;
                 }
             code_buf[0] = 0;
             code_buf_ptr = mask = 1;
@@ -343,7 +343,7 @@ compress_lzss(uint8_t *dst, uint32_t dstlen, uint8_t *src, uint32_t srcLen)
                 *dst++ = code_buf[i]; 
             else {
                 free(sp);
-                return (void *) 0;
+                return (uint8_t*) 0;
             }
     }
 

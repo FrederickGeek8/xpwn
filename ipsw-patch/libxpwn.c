@@ -1,10 +1,10 @@
-#include "common.h"
+#include "xpwn_common.h"
 #include <xpwn/libxpwn.h>
 #include <stdarg.h>
 #include <string.h>
 
 LogMessageCallback logCallback;
-char endianness;
+char xpwn_endianness;
 int GlobalLogLevel;
 
 int Img3DecryptLast = TRUE; /* FALSE for <= 7a341, TRUE for >= 7c144 */
@@ -13,7 +13,7 @@ void TestByteOrder()
 {
 	short int word = 0x0001;
 	char *byte = (char *) &word;
-	endianness = byte[0] ? IS_LITTLE_ENDIAN : IS_BIG_ENDIAN;
+	xpwn_endianness = byte[0] ? IS_LITTLE_ENDIAN : IS_BIG_ENDIAN;
 }
 
 void defaultCallback(const char* Message) {

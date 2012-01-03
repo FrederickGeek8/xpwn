@@ -1,6 +1,6 @@
 #include <stdlib.h>
 #include <string.h>
-#include "common.h"
+#include "xpwn_common.h"
 #include "abstractfile.h"
 #include <xpwn/lzssfile.h>
 #include <xpwn/lzss.h>
@@ -59,8 +59,8 @@ void closeComp(AbstractFile* file) {
 	if(info->dirty) {
 		info->header.checksum = lzadler32((uint8_t*)info->buffer, info->header.length_uncompressed);
 		
-		compressed = malloc(info->header.length_uncompressed * 2);
-		info->header.length_compressed = (uint32_t)(compress_lzss(compressed, info->header.length_uncompressed * 2, info->buffer, info->header.length_uncompressed) - compressed);
+		compressed = (uint8_t*)malloc(info->header.length_uncompressed * 2);
+		info->header.length_compressed = (uint32_t)(compress_lzss(compressed, info->header.length_uncompressed * 2, (uint8_t*)info->buffer, info->header.length_uncompressed) - compressed);
 		
 		info->file->seek(info->file, sizeof(info->header));
 		info->file->write(info->file, compressed, info->header.length_compressed);
@@ -104,10 +104,10 @@ AbstractFile* createAbstractFileFromComp(AbstractFile* file) {
 	}
 	
 	info->buffer = malloc(info->header.length_uncompressed);
-	compressed = malloc(info->header.length_compressed);
+	compressed = (uint8_t*)malloc(info->header.length_compressed);
 	file->read(file, compressed, info->header.length_compressed);
 
-	uint32_t real_uncompressed = decompress_lzss(info->buffer, compressed, info->header.length_compressed);
+	uint32_t real_uncompressed = decompress_lzss((uint8_t*)info->buffer, compressed, info->header.length_compressed);
 	if(real_uncompressed != info->header.length_uncompressed) {
 		XLOG(5, "mismatch: %d %d %d %x %x\n", info->header.length_compressed, real_uncompressed, info->header.length_uncompressed, compressed[info->header.length_compressed - 2], compressed[info->header.length_compressed - 1]);
 		free(compressed);

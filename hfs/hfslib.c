@@ -1,14 +1,14 @@
 #include <string.h>
-#include <unistd.h>
 #include <dirent.h>
 #include <time.h>
 #include <sys/types.h>
-#include "common.h"
+#include "xpwn_common.h"
 #include <hfs/hfsplus.h>
 #include <hfs/hfscompress.h>
 #include "abstractfile.h"
 #include <sys/stat.h>
 #include <inttypes.h>
+#include "hfs/hfslib.h"
 
 #define BUFSIZE 1024*1024
 
@@ -161,7 +161,7 @@ int add_hfs(Volume* volume, AbstractFile* inFile, const char* outFileName) {
 			ret = TRUE;
 		} else {
 			printf("Not a file\n");
-			exit(0);
+			ret = FALSE;
 		}
 	} else {
 		if(newFile(outFileName, volume)) {
@@ -181,7 +181,7 @@ int add_hfs(Volume* volume, AbstractFile* inFile, const char* outFileName) {
 	return ret;
 }
 
-void grow_hfs(Volume* volume, uint64_t newSize) {
+BOOL grow_hfs(Volume* volume, uint64_t newSize) {
 	uint32_t newBlocks;
 	uint32_t blocksToGrow;
 	uint64_t newMapSize;
@@ -194,7 +194,7 @@ void grow_hfs(Volume* volume, uint64_t newSize) {
 	
 	if(newBlocks <= volume->volumeHeader->totalBlocks) {
 		printf("Cannot shrink volume\n");
-		return;
+		return FALSE;
 	}
 
 	blocksToGrow = newBlocks - volume->volumeHeader->totalBlocks;
@@ -204,7 +204,7 @@ void grow_hfs(Volume* volume, uint64_t newSize) {
 		if(volume->volumeHeader->freeBlocks
 		   < ((newMapSize - volume->volumeHeader->allocationFile.logicalSize) / volume->volumeHeader->blockSize)) {
 			printf("Not enough room to allocate new allocation map blocks\n");
-			exit(0);
+			return FALSE;
 		}
 		
 		allocate((RawFile*) (volume->allocationFile->data), newMapSize);
@@ -230,6 +230,7 @@ void grow_hfs(Volume* volume, uint64_t newSize) {
 	setBlockUsed(volume, volume->volumeHeader->totalBlocks - 1, 1);
 	
 	updateVolume(volume);
+	return TRUE;
 }
 
 void removeAllInFolder(HFSCatalogNodeID folderID, Volume* volume, const char* parentName) {
@@ -640,11 +641,11 @@ void hfs_ls(Volume* volume, const char* path) {
 	free(record);
 }
 
-void hfs_untar(Volume* volume, AbstractFile* tarFile) {
+BOOL hfs_untar(Volume* volume, AbstractFile* tarFile) {
 	size_t tarSize = tarFile->getLength(tarFile);
 	size_t curRecord = 0;
 	char block[512];
-
+	int result = TRUE;
 	while(curRecord < tarSize) {
 		tarFile->seek(tarFile, curRecord);
 		tarFile->read(tarFile, block, 512);
@@ -699,7 +700,10 @@ void hfs_untar(Volume* volume, AbstractFile* tarFile) {
 			tarFile->seek(tarFile, curRecord + 512);
 			tarFile->read(tarFile, buffer, size);
 			AbstractFile* inFile = createAbstractFileFromMemory(&buffer, size);
-			add_hfs(volume, inFile, fileName);
+			if (!add_hfs(volume, inFile, fileName)) {
+				printf("add_hfs failed: %s", fileName);
+				result = FALSE;
+			}
 			free(buffer);
 		} else if(type == 5) {
 			if(!silence)
@@ -718,6 +722,6 @@ loop:
 
 		curRecord = (curRecord + 512) + ((size + 511) / 512 * 512);
 	}
-
+	return result;
 }
 

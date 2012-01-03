@@ -5,7 +5,7 @@
 #include <stdint.h>
 
 #include "abstractfile.h"
-#include "common.h"
+#include "xpwn_common.h"
 
 size_t freadWrapper(AbstractFile* file, void* data, size_t len) {
   return fread(data, 1, len, (FILE*) (file->data));

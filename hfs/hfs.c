@@ -10,7 +10,7 @@
 #include "abstractfile.h"
 #include <inttypes.h>
 
-char endianness;
+char xpwn_endianness;
 
 
 void cmd_ls(Volume* volume, int argc, const char *argv[]) {
@@ -256,11 +256,11 @@ void cmd_getattr(Volume* volume, int argc, const char *argv[]) {
 	free(record);
 }
 
-void TestByteOrder()
+static void TestByteOrder()
 {
 	short int word = 0x0001;
 	char *byte = (char *) &word;
-	endianness = byte[0] ? IS_LITTLE_ENDIAN : IS_BIG_ENDIAN;
+	xpwn_endianness = byte[0] ? IS_LITTLE_ENDIAN : IS_BIG_ENDIAN;
 }
 
 

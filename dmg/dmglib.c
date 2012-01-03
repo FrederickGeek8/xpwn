@@ -1,5 +1,5 @@
 #include <string.h>
-#include "common.h"
+#include "xpwn_common.h"
 #include "abstractfile.h"
 #include <dmg/dmg.h>
 

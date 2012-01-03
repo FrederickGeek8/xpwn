@@ -1,3 +1,6 @@
+#ifndef _LZZSFILE_H
+#define _LZZSFILE_H
+
 #include <stdint.h>
 #include <abstractfile.h>
 
@@ -25,3 +28,5 @@ typedef struct InfoComp {
 
 AbstractFile* createAbstractFileFromComp(AbstractFile* file);
 AbstractFile* duplicateCompFile(AbstractFile* file, AbstractFile* backing);
+
+#endif //_LZZSFILE_H

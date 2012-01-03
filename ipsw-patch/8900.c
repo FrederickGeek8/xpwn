@@ -4,7 +4,7 @@
 #include <openssl/aes.h>
 #include <openssl/sha.h>
 
-#include "common.h"
+#include "xpwn_common.h"
 #include <xpwn/8900.h>
 #include <xpwn/img2.h>
 
@@ -93,7 +93,7 @@ void close8900(AbstractFile* file) {
 
 		if(info->header.format == 3) {
 			memset(ivec, 0, 16);
-			AES_cbc_encrypt(info->buffer, info->buffer, info->header.sizeOfData, &(info->encryptKey), ivec, AES_ENCRYPT);
+			AES_cbc_encrypt((const uint8_t*)info->buffer, (uint8_t*)info->buffer, info->header.sizeOfData, &(info->encryptKey), ivec, AES_ENCRYPT);
 		}
 		
 		info->file->seek(info->file, sizeof(info->header));
@@ -172,7 +172,7 @@ AbstractFile* createAbstractFileFrom8900(AbstractFile* file) {
 	
 	if(info->header.format == 3) {
 		memset(ivec, 0, 16);
-		AES_cbc_encrypt(info->buffer, info->buffer, info->header.sizeOfData, &(info->decryptKey), ivec, AES_DECRYPT);
+		AES_cbc_encrypt((const uint8_t*)info->buffer, (uint8_t*)info->buffer, info->header.sizeOfData, &(info->decryptKey), ivec, AES_DECRYPT);
 	}
 
 	info->dirty = FALSE;

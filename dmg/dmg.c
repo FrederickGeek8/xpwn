@@ -6,7 +6,7 @@
 #include <dmg/dmg.h>
 #include <dmg/filevault.h>
 
-char endianness;
+static char endianness;
 
 void TestByteOrder()
 {

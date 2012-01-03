@@ -795,7 +795,7 @@ int removeFile(const char* fileName, Volume* volume) {
 	HFSPlusCatalogRecord* record;
 	HFSPlusCatalogKey key;
 	io_func* io;
-	HFSPlusCatalogFolder* parentFolder;
+	HFSPlusCatalogFolder* parentFolder = NULL;
 
 	record = getRecordFromPath3(fileName, volume, NULL, &key, TRUE, FALSE, kHFSRootFolderID);
 	if(record != NULL) {
@@ -874,7 +874,9 @@ int removeFile(const char* fileName, Volume* volume) {
 
 		return TRUE;
 	} else {
-		free(parentFolder);
+		if (parentFolder != NULL) {
+			free(parentFolder);
+		}
 		ASSERT(FALSE, "cannot find record");
 		return FALSE;
 	}
