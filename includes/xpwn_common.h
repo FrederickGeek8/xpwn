@@ -100,9 +100,9 @@ static inline void flipEndianLE(unsigned char* x, int length) {
 }
 
 static inline void hexToBytes(const char* hex, uint8_t** buffer, size_t* bytes) {
+	size_t i;
 	*bytes = strlen(hex) / 2;
 	*buffer = (uint8_t*) malloc(*bytes);
-	size_t i;
 	for(i = 0; i < *bytes; i++) {
 		uint32_t byte;
 		sscanf(hex, "%2x", &byte);
@@ -112,9 +112,9 @@ static inline void hexToBytes(const char* hex, uint8_t** buffer, size_t* bytes) 
 }
 
 static inline void hexToInts(const char* hex, unsigned int** buffer, size_t* bytes) {
+	size_t i;
 	*bytes = strlen(hex) / 2;
 	*buffer = (unsigned int*) malloc((*bytes) * sizeof(int));
-	size_t i;
 	for(i = 0; i < *bytes; i++) {
 		sscanf(hex, "%2x", &((*buffer)[i]));
 		hex += 2;
