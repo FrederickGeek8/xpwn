@@ -70,7 +70,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir)\includes;$(ProjectDir)\..\_3rd\zlib%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)\includes;$(ProjectDir)\includes\win32;$(ProjectDir)\..\_3rd\zlib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <CompileAs>CompileAsCpp</CompileAs>
     </ClCompile>
@@ -88,7 +88,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir)\includes;$(ProjectDir)\..\_3rd\zlib%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)\includes;$(ProjectDir)\includes\win32;$(ProjectDir)\..\_3rd\zlib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <CompileAs>CompileAsCpp</CompileAs>
     </ClCompile>
@@ -109,7 +109,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <AdditionalIncludeDirectories>$(ProjectDir)\includes;$(ProjectDir)\..\_3rd\zlib%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)\includes;$(ProjectDir)\includes\win32;$(ProjectDir)\..\_3rd\zlib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <CompileAs>CompileAsCpp</CompileAs>
     </ClCompile>
     <Link>
@@ -131,7 +131,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <AdditionalIncludeDirectories>$(ProjectDir)\includes;$(ProjectDir)\..\_3rd\zlib%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)\includes;$(ProjectDir)\includes\win32;$(ProjectDir)\..\_3rd\zlib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <CompileAs>CompileAsCpp</CompileAs>
     </ClCompile>
     <Link>
@@ -204,7 +204,6 @@
     <ClInclude Include="dll\hfsdll.h" />
     <ClInclude Include="dll\xpwndll.h" />
     <ClInclude Include="includes\abstractfile.h" />
-    <ClInclude Include="includes\dirent.h" />
     <ClInclude Include="includes\dmg\dmg.h" />
     <ClInclude Include="includes\dmg\dmgfile.h" />
     <ClInclude Include="includes\dmg\dmglib.h" />
@@ -214,6 +213,7 @@
     <ClInclude Include="includes\hfs\hfsplus.h" />
     <ClInclude Include="includes\partial\firmwaremaster.h" />
     <ClInclude Include="includes\partial\partial.h" />
+    <ClInclude Include="includes\win32\dirent.h" />
     <ClInclude Include="includes\xpwn\8900.h" />
     <ClInclude Include="includes\xpwn\ibootim.h" />
     <ClInclude Include="includes\xpwn\img2.h" />
