@@ -107,7 +107,13 @@ int xpwntool_enc_dec(const char* srcName, const char* destName, const char* temp
 	inFile->close(inFile);
 
 	newFile->write(newFile, inData, inDataSize);
-	newFile->close(newFile);
+
+    if (templateFileName != NULL && strstr(destName, "WTF.")) {
+		fprintf(stderr, "Exploiting 8900 vulnerability (%s)... ;)\n", destName); fflush(stderr);
+		exploit8900(newFile);
+	}
+
+    newFile->close(newFile);
 
 	free(inData);
 
