@@ -1,4 +1,4 @@
-#if WIN32 
+#if WIN32
 
 #define DLLEXPORT __declspec(dllexport)
 
@@ -6,13 +6,18 @@
 extern "C" {
 #endif
 
-DLLEXPORT int _cdecl xpwntool_enc_dec(const char* srcName, const char* destName, const char* templateFileName, const char* ivStr, const char* keyStr);
+DLLEXPORT int _cdecl xpwntool_enc_dec(const char* srcName, const char* destName,
+                                      const char* templateFileName,
+                                      const char* ivStr, const char* keyStr);
 
 DLLEXPORT char* _cdecl xpwntool_get_kbag(char* fileName);
-
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif //WIN32
+#endif  // WIN32
+int xpwntool_enc_dec(const char* srcName, const char* destName,
+                     const char* templateFileName, const char* ivStr,
+                     const char* keyStr);
+char* xpwntool_get_kbag(char* fileName);

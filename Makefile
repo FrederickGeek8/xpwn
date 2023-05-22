@@ -51,7 +51,7 @@ SOURCES=$(patsubst %.c, ipsw-patch/%.c, $(SOURCES_IPSW)) \
     $(patsubst %.c, dll/%.c,  $(SOURCES_DLL)) \
     
 
-CFLAGS=-Iincludes -force_cpusubtype_ALL -mmacosx-version-min=10.6 -arch i386 -arch x86_64
+CFLAGS=-Iincludes -force_cpusubtype_ALL -mmacosx-version-min=13.0 -arch x86_64
 
 OBJS = $(patsubst %.c, %.o, $(SOURCES))
 

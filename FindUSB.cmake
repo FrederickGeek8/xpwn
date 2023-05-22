@@ -34,7 +34,7 @@ else (USB_LIBRARIES AND USB_INCLUDE_DIRS)
     PATHS
       /usr/lib
       /usr/local/lib
-      /opt/local/lib
+      /usr/local/lib
       /sw/lib
   )
 
